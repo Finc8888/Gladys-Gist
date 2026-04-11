@@ -1,0 +1,9 @@
+# Additional information
+- In Go's servemux, longer URL patterns always take precendece over shorter one
+- http.Handle() and http.HandleFunc() allow you register routes without declaring a servemux like this
+```bash
+http.handleFunc("/", home)
+err := http.ListenAndServe(":4000", nil)
+```
+But behind the scenes, these functions register their routes with DefaultServeMux.
+But DefaultServeMux is a global variable, any package can access it and register a route - including any third-party packages. It could be to expose a malicious handler to the web. So use own locally-scoped servemux instead

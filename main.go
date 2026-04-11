@@ -8,7 +8,23 @@ import (
 // Define a home handler function which writes a byte slice containing
 // "Hello from GladysGist" as the response body.
 func home(w http.ResponseWriter, r *http.Request) {
+	// Avoid to use subtree pattern for root route
+	if r.URL.Path != "/" {
+		http.NotFound(w, r)
+		return
+	}
+
 	w.Write([]byte("Hello from GladysGist"))
+}
+
+// Add a gistView handler function.
+func gistView(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("Display a specific snippet..."))
+}
+
+// Add a gistCreate handler function.
+func gistCreate(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("Create a new gist"))
 }
 
 func main() {
@@ -16,6 +32,8 @@ func main() {
 	// register the home function as the handler for the "/" URL pattern.
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", home)
+	mux.HandleFunc("/gist/view", gistView)
+	mux.HandleFunc("/gist/create", gistCreate)
 
 	// Use the http.ListenAndServe() function to start a new web server. We pass in
 	// two parameters: the TCP network address to listen on (in this case ":4000")
