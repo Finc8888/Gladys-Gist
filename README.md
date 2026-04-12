@@ -34,3 +34,9 @@ git config --global init.defaultBranch main
 ```bash
 git branch -m main
 ```
+
+## Use curl for make requests to API
+### POST request
+```bash
+curl -i -X POST http://localhost:4000/gist/create
+```
