@@ -13,9 +13,8 @@ go mod init gist.gladys.net
 ## Run project
 
 ```bash
-go run .
-go run main.go
-go run gist.gladys.net
+go run ./cmd/web
+go run gist.gladys.net/cmd/web
 ```
 
 ## Command to display local ports on Linux

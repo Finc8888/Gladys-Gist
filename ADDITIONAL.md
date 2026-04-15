@@ -23,3 +23,10 @@ If a HTTP/2 connection is being used, Go will always automatically convert the h
 ```go
 w.Header()["Date"] = nil
 ```
+- There's no single right way to structure web application in Go. But there is [popular](https://github.com/thockin/go-build-template) - and [tried-and-tested](https://peter.bourgon.org/go-best-practices-2016/) approach.
+
+- The `cmd` directory contains the application-specific code for the executable applications in the project. For now we'll have just one executable application - the web application - which lives under the `cmd/web` dirrectory.
+
+- The `internal` directory contains the ancillary non-application-specific code used in the project. We use it to hold potentially reusable code like validation helplers and the SQL db models for the project. Any packages under `internal` cannot be imported by code outside of our project. This is useful because it prevents other codebases from importing and relying on the packages in our `internal` directory.
+
+- The `ui` directory contains the user-interface assets used by the web application. Specifically, tthe `ui/html` dirrectory contains static files(like CSS and images).
