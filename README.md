@@ -4,6 +4,18 @@
 
 Project by tutorial of the book Let's Go by Alex Edwards(2 edition)
 
+## Go's documentation
+
+```bash
+go doc fmt
+```
+
+or
+
+```bash
+go install golang.org/x/pkgsite/cmd/pkgsite@latest pkgsite -open
+```
+
 ## Creating module
 
 ```bash
