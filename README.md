@@ -51,3 +51,11 @@ git branch -m main
 ```bash
 curl -i -X POST http://localhost:4000/gist/create
 ```
+### GET request
+```bash
+curl http://localhost:4000/gist/view?id=1st/view?id=1
+```
+### Range request
+```bash
+curl -i -H "Range: bytes=100-199" --output - http://localhost:4000/static/img/logo.png
+```
