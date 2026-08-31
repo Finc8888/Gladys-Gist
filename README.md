@@ -29,6 +29,12 @@ go run ./cmd/web
 go run gist.gladys.net/cmd/web
 ```
 
+### Run with options
+```bash
+go run ./cmd/web -help
+go run ./cmd/web -addr=":5000"
+```
+
 ## Command to display local ports on Linux
 Go check it during http.ListenAndServe()
 ```bash
