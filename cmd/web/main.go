@@ -7,22 +7,22 @@ import (
 	"flag"
 )
 
-func main() {
-    // Define a new command-line flag with the name 'addr', a default value of ":4000"
-    // and some short help text explaning what the flag controls. The value of the
-    // flag will be stored in the addr variable at runtime.
-    addr := flag.String("addr", ":4000", "HTTP network address")
+type config struct {
+    addr string
+    staticDir string
+}
 
-    // Importantly, we use the flag.Parse() function to parse the commmand-line flag.
-    // This reads in the command-line flag value and assigns it to the addr
-    // variable. You need to call this *before* you use the addr variable
-    // otherwise it will always contain the default value of ":4000". If any errors are
-    // encountered during parsing the application will be terminated.
+var cfg config
+
+func main() {
+    flag.StringVar(&cfg.addr, "addr", ":4000", "HTTP network address")
+    flag.StringVar(&cfg.staticDir, "static-dir", "./ui/static", "Path to static assets")
+
     flag.Parse()
 
 	mux := http.NewServeMux()
 
-	fileServer := http.FileServer(neuteredFileSystem{http.Dir("./ui/static")})
+	fileServer := http.FileServer(neuteredFileSystem{http.Dir(cfg.staticDir)})
 	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
 
 	// Register the other application routes as normal
@@ -30,8 +30,8 @@ func main() {
 	mux.HandleFunc("/gist/view", gistView)
 	mux.HandleFunc("/gist/create", gistCreate)
 
-	log.Printf("Starting server on %s", *addr)
-	err := http.ListenAndServe(*addr, mux)
+	log.Printf("Starting server on %s", cfg.addr)
+	err := http.ListenAndServe(cfg.addr, mux)
 	log.Fatal(err)
 }
 
