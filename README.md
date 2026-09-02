@@ -35,6 +35,11 @@ go run ./cmd/web -help
 go run ./cmd/web -addr=":5000"
 ```
 
+### Run with log in files
+```bash
+go run ./cmd/web >>./logs/info.log 2>> ./logs/error.log
+```
+
 ## Command to display local ports on Linux
 Go check it during http.ListenAndServe()
 ```bash

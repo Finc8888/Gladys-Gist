@@ -1,11 +1,11 @@
 package main
 
 import (
-    "net/http"
-    "html/template"
-    "log"
-    "strconv"
-    "fmt"
+	"fmt"
+	"html/template"
+	"log"
+	"net/http"
+	"strconv"
 )
 
 func home(w http.ResponseWriter, r *http.Request) {
@@ -18,8 +18,8 @@ func home(w http.ResponseWriter, r *http.Request) {
 	// to note that the file containing our base template must be the *first*
 	// file in the slice.
 	files := []string{
-	    "./ui/html/base.tmpl.html",
-	    "./ui/html/partials/nav.tmpl.html",
+		"./ui/html/base.tmpl.html",
+		"./ui/html/partials/nav.tmpl.html",
 		"./ui/html/pages/home.tmpl.html",
 	}
 
@@ -28,7 +28,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 	// paths as a variadic parameter?
 	ts, err := template.ParseFiles(files...)
 	if err != nil {
-	    log.Print(err.Error())
+		log.Print(err.Error())
 		http.Error(w, "Internal Server Error", 500)
 		return
 	}
@@ -37,7 +37,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 	// template as the response body.
 	err = ts.ExecuteTemplate(w, "base", nil)
 	if err != nil {
-	    log.Print(err.Error())
+		log.Print(err.Error())
 		http.Error(w, "Internal Server Error", 500)
 	}
 }

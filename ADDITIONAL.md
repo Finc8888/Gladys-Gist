@@ -30,3 +30,5 @@ w.Header()["Date"] = nil
 - The `internal` directory contains the ancillary non-application-specific code used in the project. We use it to hold potentially reusable code like validation helplers and the SQL db models for the project. Any packages under `internal` cannot be imported by code outside of our project. This is useful because it prevents other codebases from importing and relying on the packages in our `internal` directory.
 
 - The `ui` directory contains the user-interface assets used by the web application. Specifically, tthe `ui/html` dirrectory contains static files(like CSS and images).
+
+- As a rule of thumb, you should avoid using the Panic() and Fatal() variations outside of your main() function - it's good practice to return errors instead, and only panic or exit directly from main().
