@@ -13,6 +13,14 @@ type config struct {
 	staticDir string
 }
 
+// Define an application struct to hold the application-wide dependencies for the
+// web application. For now we'll only include fields for the two custom loggers, but
+// we'll add more to it as the build progress.
+type application struct {
+	errorLog *log.Logger
+	infoLog  *log.Logger
+}
+
 var cfg config
 
 func main() {
@@ -21,27 +29,25 @@ func main() {
 
 	flag.Parse()
 
-	// Use log.New() to create a logger for writing information messages. This takes
-	// three parameters: the destination to write the logs to (os.Stdout), a string
-	// prefix for message (INFO followed by a tab), and flags to indicate what
-	// additional information to include (local date and time). Note that the flags
-	// are joined using the bitwise OR operator |.
 	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
-
-	// Create a logger for writing error messages in the same way, but use stderr as
-	// the destination and use the log.Lshortfile flag to include the relevant
-	// file name and line number.
 	errorLog := log.New(os.Stderr, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
 
+	// Initialize as new instance of our application struct, containing the dependencies.
+	app := &application{
+		errorLog: errorLog,
+		infoLog:  infoLog,
+	}
+
+	// Swap the route declarations to use the application struct's methods as the handler functions.
 	mux := http.NewServeMux()
 
 	fileServer := http.FileServer(neuteredFileSystem{http.Dir(cfg.staticDir)})
 	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
 
 	// Register the other application routes as normal
-	mux.HandleFunc("/", home)
-	mux.HandleFunc("/gist/view", gistView)
-	mux.HandleFunc("/gist/create", gistCreate)
+	mux.HandleFunc("/", app.home)
+	mux.HandleFunc("/gist/view", app.gistView)
+	mux.HandleFunc("/gist/create", app.gistCreate)
 
 	// Initialize a new http.Server struct. We set  the Addr and Handler fields so
 	// that the server uses the same network address and routes as before, and set
