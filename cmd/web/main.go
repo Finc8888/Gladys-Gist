@@ -1,13 +1,13 @@
 package main
 
 import (
-    "database/sql"
+	"database/sql"
 	"flag"
+	_ "github.com/go-sql-driver/mysql"
 	"log"
 	"net/http"
 	"os"
 	"path/filepath"
-	_ "github.com/go-sql-driver/mysql"
 )
 
 type config struct {
@@ -33,9 +33,9 @@ func main() {
 	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
 	errorLog := log.New(os.Stderr, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
 
-	db, err := openDB(*&cfg.dsn)
+	db, err := openDB(cfg.dsn)
 	if err != nil {
-	    errorLog.Fatal(err)
+		errorLog.Fatal(err)
 	}
 
 	defer db.Close()
@@ -86,14 +86,14 @@ func (nfs neuteredFileSystem) Open(path string) (http.File, error) {
 	return f, nil
 }
 
-// The openDB() function wraps sql.Opnen() and returns a sql.DB connection pool for a given DSN
+// The openDB() function wraps sql.Open() and returns a sql.DB connection pool for a given DSN
 func openDB(dsn string) (*sql.DB, error) {
-    db, err := sql.Open("mysql", *&cfg.dsn)
-    if err != nil {
-        return nil, err
-    }
-    if err = db.Ping(); err != nil {
-        return nil, err
-    }
-    return db, nil
+	db, err := sql.Open("mysql", dsn)
+	if err != nil {
+		return nil, err
+	}
+	if err = db.Ping(); err != nil {
+		return nil, err
+	}
+	return db, nil
 }
