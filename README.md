@@ -21,6 +21,18 @@ go install golang.org/x/pkgsite/cmd/pkgsite@latest pkgsite -open
 ```bash
 go mod init gist.gladys.net
 ```
+### Verify packages
+```bash
+go mod verify
+```
+### Download required packages
+```bash
+go mod download
+```
+### Auto remove unused packages
+```bash
+go mod tidy -v
+```
 
 ## Run project
 
@@ -69,4 +81,9 @@ curl http://localhost:4000/gist/view?id=1st/view?id=1
 ### Range request
 ```bash
 curl -i -H "Range: bytes=100-199" --output - http://localhost:4000/static/img/logo.png
+```
+
+## Install mysql driver
+```bash
+go get github.com/go-sql-driver/mysql
 ```
