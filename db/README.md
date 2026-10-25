@@ -1,4 +1,4 @@
-# Run mysqldb into container
+# Run SQL against the MySQL container
 
 ## Migrations
 ```bash
@@ -36,5 +36,5 @@ SHOW GRANTS FOR 'web'@'%';
 ```
 ## Run db in terminal
 ```bash
-docker exec -it ill-mysql8 mysql -u <user> --password=<pass>
+docker exec -it ill-mysql8 mysql -u <user>
 ```

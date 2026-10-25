@@ -1,5 +1,5 @@
 DROP USER IF EXISTS 'web'@'%';
-CREATE USER IF NOT EXISTS 'gladys'@'%';
-GRANT SELECT, INSERT, UPDATE, DELETE ON gistbox.* TO 'gladys'@'%';
+CREATE USER IF NOT EXISTS 'web'@'%';
+GRANT SELECT, INSERT, UPDATE, DELETE ON gistbox.* TO 'web'@'%';
 -- Important: Make sure to swap 'pass' with a password of your own choosing
-ALTER USER 'gladys'@'%' IDENTIFIED BY 'web';
+ALTER USER 'web'@'%' IDENTIFIED BY 'pass';
