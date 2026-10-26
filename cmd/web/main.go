@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"gist.gladys.net/internal/models"
 )
 
 type config struct {
@@ -19,6 +20,7 @@ type config struct {
 type application struct {
 	errorLog *log.Logger
 	infoLog  *log.Logger
+	gists *models.GistModel
 }
 
 var cfg config
@@ -43,6 +45,7 @@ func main() {
 	app := &application{
 		errorLog: errorLog,
 		infoLog:  infoLog,
+		gists: &models.GistModel{DB: db},
 	}
 
 	srv := &http.Server{
